@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import click
 from io import BytesIO
 from base64 import b64decode
@@ -46,11 +47,11 @@ def make_tts(client: ElevenLabs, voice_id: str, out_file: str, text: str) -> Non
             "use_speaker_boost": False,
         },
     )
-
     with open(out_file, "wb") as f:
-        f.write(b64decode(result.audio_base_64))
+        for b in result:
+            f.write(b)
 
-    click.echo(f"Saved audio to {out_file}")
+    click.echo(f"Saved to {out_file}")
 
 
 if __name__ == "__main__":
