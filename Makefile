@@ -10,3 +10,6 @@ install:  ## Install package and pre-commit hooks
 	@pip install poetry
 	@poetry install --no-root
 	@pre-commit install
+
+docker-build:
+	docker build . -t deusalex/voice-cloner-cli:latest
