@@ -25,12 +25,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build image
-        run: |
-          docker build . \
-            -t deusalex/voice-cloner-cli:latest \
-            -t deusalex/voice-cloner-cli:${{ steps.tag.outputs.TAG }}
+        run: docker build . -t deusalex/voice-cloner-cli:latest -t deusalex/voice-cloner-cli:${{ GITHUB_REF_NAME }}
 
       - name: Push image
         run: |
           docker push deusalex/voice-cloner-cli:latest
-          docker push deusalex/voice-cloner-cli:${{ steps.tag.outputs.TAG }}
+          docker push deusalex/voice-cloner-cli:${{ GITHUB_REF_NAME }}
