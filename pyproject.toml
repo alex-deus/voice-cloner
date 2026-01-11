@@ -1,0 +1,60 @@
+[project]
+name = "voice-cloner"
+version = "0.0.1"
+description = "CLI for voice cloning using the ElevenLabs AI service"
+package-mode = false
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Alex Deus"}
+]
+keywords = ["ElevenLabs", "AI", "Voice Generator", "TTS"]
+dependencies = [
+    "click (>=8.3.1,<9.0.0)",
+    "elevenlabs (>=2.29.0,<3.0.0)"
+]
+
+[project.urls]
+Homepage = "https://github.com/alex-deus/voice-cloner"
+Repository = "https://github.com/alex-deus/voice-cloner"
+Issues = "https://github.com/alex-deus/voice-cloner/issues"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.6.0"
+isort = "^5.13.2"
+seed-isort-config = "^2.2.0"
+black = "^23.12.1"
+flake8 = "^7.0.0"
+autoflake = "^2.2.1"
+bandit = "^1.7.6"
+
+[tool.black]
+line-length = 120
+target-version = ['py38']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.git
+  | .idea
+  | .kiro
+  | .vscode
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 120
+include_trailing_comma = true
+sections = ['FUTURE', 'STDLIB', 'THIRDPARTY', 'FIRSTPARTY', 'LOCALFOLDER']
+known_first_party = "voice_cloner"
+known_third_party = ["click", "elevenlabs"]
+
+[tool.bandit]
+exclude_dirs = []
+skips = []
