@@ -2,6 +2,12 @@
 CLI for voice cloning using the ElevenLabs AI service.
 
 # How to use
+## Clone
+```shell
+git clone https://github.com/alex-deus/voice-cloner.git
+cd voice-cloner
+```
+
 ## Install
 ```shell
 pip install poetry
