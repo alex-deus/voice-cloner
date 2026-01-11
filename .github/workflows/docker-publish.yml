@@ -24,10 +24,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build image
-        run: docker build . -t deusalex/voice-cloner-cli:latest -t deusalex/voice-cloner-cli:$GITHUB_REF_NAME
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-      - name: Push image
-        run: |
-          docker push deusalex/voice-cloner-cli:latest
-          docker push deusalex/voice-cloner-cli:$GITHUB_REF_NAME
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: deusalex/voice-cloner-cli:latest,deusalex/voice-cloner-cli:${{ steps.tag.outputs.TAG }}
