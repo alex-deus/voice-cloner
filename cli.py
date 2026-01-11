@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-import click
 from io import BytesIO
-from base64 import b64decode
 
+import click
 from elevenlabs.client import ElevenLabs
 
 
