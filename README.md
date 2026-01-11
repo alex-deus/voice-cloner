@@ -16,7 +16,7 @@ poetry install --no-root
 
 ## Configure
 ```shell
-export ELEVENLABS_API_KEY="sk_..."
+export ELEVENLABS_TOKEN="sk_..."
 ```
 
 ## Run
