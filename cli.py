@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from datetime import datetime
 from io import BytesIO
 
 import click
@@ -14,7 +15,12 @@ def cli(ctx, api_key: str) -> None:
 
 @cli.command("clone-voice")
 @click.option(
-    "--file", "file_path", default="voice.mp3", show_default=True, type=click.Path(exists=True), help="File with voice"
+    "--file",
+    "file_path",
+    default="voices/voice.mp3",
+    show_default=True,
+    type=click.Path(exists=True),
+    help="File with a voice",
 )
 @click.option("--name", default="voice", required=True, help="Name for the cloned voice")
 @click.pass_obj
@@ -22,19 +28,27 @@ def clone_voice(client: ElevenLabs, file_path: str, name: str) -> None:
     with open(file_path, "rb") as f:
         audio_bytes: bytes = f.read()
 
-    voice = client.voices.ivc.create(name=name, files=[BytesIO(audio_bytes)])
+    result = client.voices.ivc.create(name=name, files=[BytesIO(audio_bytes)])
 
-    click.echo(f"VoiceID={voice.voice_id} has been created")
+    click.echo(f"VoiceID={result.voice_id} has been created")
 
 
 @cli.command("make-tts")
 @click.option("--voice-id", required=True, help="11labs Voice ID to use")
 @click.option(
-    "--out", "out_file", default="audio.mp3", show_default=True, type=click.Path(exists=False), help="Output audio file"
+    "--out",
+    "out_file",
+    required=False,
+    show_default=True,
+    type=click.Path(exists=False),
+    help="Output audio file. Default is audios/<now in UTC at ISO format>.mp3",
 )
 @click.option("--text", required=True, help="Text to synthesize")
 @click.pass_obj
-def make_tts(client: ElevenLabs, voice_id: str, out_file: str, text: str) -> None:
+def make_tts(client: ElevenLabs, voice_id: str, out_file: str | None, text: str) -> None:
+    if not out_file:
+        out_file = f"audios/{datetime.utcnow().isoformat()}.mp3"
+
     result = client.text_to_speech.convert(
         text=text,
         model_id="eleven_multilingual_v2",
