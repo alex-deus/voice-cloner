@@ -13,3 +13,6 @@ install:  ## Install package and pre-commit hooks
 
 docker-build:
 	docker build . -t deusalex/voice-cloner-cli:latest
+
+docker-push:
+	docker push deusalex/voice-cloner-cli:latest
